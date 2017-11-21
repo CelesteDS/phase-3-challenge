@@ -11,15 +11,14 @@ CREATE TABLE orders (
 );
 
 CREATE TABLE sections (
-  id SERIAL PRIMARY KEY,
-  title VARCHAR(60)
+  title VARCHAR(60) PRIMARY KEY
 );
 
 CREATE TABLE products (
   id SERIAL PRIMARY KEY,
   name VARCHAR(80),
   price FLOAT ,
-  section INTEGER REFERENCES sections(id)
+  section VARCHAR(40) REFERENCES sections(title)
 );
 
 CREATE TABLE orders_products (
