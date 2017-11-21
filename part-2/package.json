@@ -1,0 +1,11 @@
+{
+  "name": "part-2",
+  "version": "1.0.0",
+  "description": "part 2 of phase 3 challenge",
+  "main": "store.js",
+  "scripts": {
+    "test": "export NODE_ENV='test && mocha"
+  },
+  "author": "Celeste De Santiago",
+  "license": "ISC"
+}
