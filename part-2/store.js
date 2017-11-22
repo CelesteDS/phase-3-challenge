@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
-const { db, productList, shopperOrders } = require('./database');
+const { productList, shopperOrders, realShoppers } = require('./database');
 
 const command = process.argv[2];
 const inputOption = process.argv[3];
 let shopperId;
-console.log(command);
 
 switch (command) {
   case 'product-list':
@@ -16,11 +15,11 @@ switch (command) {
     if (isNaN(shopperId)) {
       console.log(`Shopper id must be a number. You entered ${inputOption}.`);
     } else {
-      printShopperOrders(/*shopperOrders(shopperId)*/);
+      shopperOrders(shopperId).then((data)=>console.log('in switch '+data));
     }
     break;
   case 'real-shoppers':
-    printRealShoppers();
+    realShoppers().then(printRealShoppers);
     break;
   default:
     console.log(`The valid commands are product-list <section>,
@@ -56,13 +55,14 @@ function printSection(items) {
   console.log(line);
 }
 
-function printRealShoppers () {
+function printRealShoppers(shopperList) {
   const nameWidth = 13;
   const orderWidth = 17;
   const line = `|-${'-'.repeat(nameWidth)}+-${'-'.repeat(orderWidth)}|`;
   console.log(line);
   console.log('| shopper name | number of orders |');
   console.log(line);
-  //print names and # of orders here
+  shopperList.forEach(shopper =>
+  console.log(`| ${shopper.name}${' '.repeat(nameWidth - shopper.name.length)}|${' '.repeat(orderWidth - shopper.count.length)}${shopper.count} |`));
   console.log(line);
 }

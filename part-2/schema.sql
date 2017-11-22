@@ -14,7 +14,7 @@ CREATE TABLE orders (
 CREATE TABLE products (
   id SERIAL PRIMARY KEY,
   name VARCHAR(80),
-  price FLOAT ,
+  price FLOAT,
   section VARCHAR(40)
 );
 

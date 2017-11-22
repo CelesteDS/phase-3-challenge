@@ -9,23 +9,38 @@ function productList(section) {
     FROM products
     WHERE section = $1`, section);
 }
-
+/**
+ * [shopperOrders description]
+ * @param  {[type]} shopperId [description]
+ * @return {Promise} - resolves to array of objects with keys order_id and sum
+ */
 function shopperOrders(shopperId) {
-  db.task((t) => {
-    return t.any(`
+  db.any(`
       SELECT id
       FROM orders
       WHERE shopper_id = $1`, shopperId)
-      .then(ids =>
-        ids.forEach(obj =>
-          t.any(`SELECT order_id, SUM(price)
+    .then((ids) => {
+      console.log(ids);
+      const arr = [];
+      ids.forEach((obj) => {
+        console.log('obj id is ' + obj.id);
+        arr.push(db.any(`SELECT order_id, SUM(price)
           FROM orders_products
           JOIN products ON products.id = product_id
           WHERE order_id = $1
-          GROUP BY order_id`, obj.id))
-      )
-  }).then(
-  ).catch(console.error);
+          GROUP BY order_id`, obj.id));
+      })
+      return Promise.all(arr);
+    })
+
 }
 
-module.exports = { productList, shopperOrders };
+function realShoppers() {
+  return db.any(`
+    SELECT shoppers.name, COUNT(shopper_id)
+    FROM orders
+    JOIN shoppers ON shoppers.id = shopper_id
+    GROUP BY shoppers.name`);
+}
+
+module.exports = { productList, shopperOrders, realShoppers };
