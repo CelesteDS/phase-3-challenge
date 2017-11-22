@@ -1,4 +1,4 @@
-COPY products (name, price, section) FROM STDIN CSV HEADER 
+COPY products (name, price, section) FROM STDIN CSV HEADER;
 
 INSERT INTO shoppers (name) VALUES ('Alice');
 INSERT INTO shoppers (name) VALUES ('Betty');

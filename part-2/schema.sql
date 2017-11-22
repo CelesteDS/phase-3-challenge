@@ -10,15 +10,12 @@ CREATE TABLE orders (
   shopper_id INTEGER REFERENCES shoppers(id)
 );
 
-CREATE TABLE sections (
-  title VARCHAR(60) PRIMARY KEY
-);
 
 CREATE TABLE products (
   id SERIAL PRIMARY KEY,
   name VARCHAR(80),
   price FLOAT ,
-  section VARCHAR(40) REFERENCES sections(title)
+  section VARCHAR(40)
 );
 
 CREATE TABLE orders_products (
