@@ -12,32 +12,20 @@ const db = pg(connectionString);
 function productList(section) {
   return db.any(`SELECT name, section
     FROM products
-    WHERE section = $1`, section);
+    WHERE section = $1`, section)
+    .catch(console.error);
 }
 /**
- * [shopperOrders description]
- * @param  {[type]} shopperId [description]
- * @return {Promise} - resolves to array of objects with keys order_id and sum
+ * Gets all the orders and their totals for a given shopper
+ * @param  {number} shopperId id of shopper
+ * @return {promise} - resolves to array of objects with keys order_id and sum
  */
 function shopperOrders(shopperId) {
-  db.any(`
-      SELECT id
-      FROM orders
-      WHERE shopper_id = $1`, shopperId)
-    .then((ids) => {
-      console.log(ids);
-      const arr = [];
-      ids.forEach((obj) => {
-        console.log('obj id is ' + obj.id);
-        arr.push(db.any(`SELECT order_id, SUM(price)
+  return db.any(`SELECT order_id, SUM(price)
           FROM orders_products
           JOIN products ON products.id = product_id
-          WHERE order_id = $1
-          GROUP BY order_id`, obj.id));
-      })
-      return Promise.all(arr);
-    })
-
+          WHERE order_id IN (SELECT id FROM orders WHERE shopper_id = $1)
+          GROUP BY order_id`, shopperId);
 }
 
 /**
@@ -49,7 +37,8 @@ function realShoppers() {
     SELECT shoppers.name, COUNT(shopper_id)
     FROM orders
     JOIN shoppers ON shoppers.id = shopper_id
-    GROUP BY shoppers.name`);
+    GROUP BY shoppers.name`)
+    .catch(console.error);
 }
 
 module.exports = { productList, shopperOrders, realShoppers };
