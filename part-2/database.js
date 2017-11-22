@@ -12,8 +12,7 @@ const db = pg(connectionString);
 function productList(section) {
   return db.any(`SELECT name, section
     FROM products
-    WHERE section = $1`, section)
-    .catch(console.error);
+    WHERE section = $1`, section);
 }
 /**
  * Gets all the orders and their totals for a given shopper
@@ -37,8 +36,7 @@ function realShoppers() {
     SELECT shoppers.name, COUNT(shopper_id)
     FROM orders
     JOIN shoppers ON shoppers.id = shopper_id
-    GROUP BY shoppers.name`)
-    .catch(console.error);
+    GROUP BY shoppers.name`);
 }
 
 module.exports = { productList, shopperOrders, realShoppers };

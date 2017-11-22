@@ -12,15 +12,15 @@ describe('productList()', () => {
 describe('shopperOrders()', () => {
   it('should list the orders with totals', () => {
     // place holder failing test until I get shopperOrders returning properly
-    shopperOrders(2).then((results) => {
-      console.log('results are' + results);
+    shopperOrders(3).then((results) => {
+      expect(results[1].order_id).to.equal(3);
     });
   });
 });
 
 describe('realShoppers()', () => {
-  it('should contain shoppers that have at least one order', () => {
+  it('should contain just 2 shoppers', () => {
     realShoppers().then(results =>
-      expect(results[1].name).to.equal('Dorothy'));
+      expect(results.length).to.equal(2));
   });
 });

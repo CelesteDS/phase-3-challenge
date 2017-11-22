@@ -15,7 +15,7 @@ switch (command) {
     if (isNaN(shopperId)) {
       console.log(`Shopper id must be a number. You entered ${inputOption}.`);
     } else {
-      shopperOrders(shopperId).then((data)=>console.log('in switch '+data));
+      shopperOrders(shopperId).then(printShopperOrders);
     }
     break;
   case 'real-shoppers':
@@ -27,20 +27,27 @@ switch (command) {
     break;
 }
 
-function printShopperOrders () {
+/**
+ * Formats the orders and totals and prints them to the console.
+ * @param  {array} orders each order is an object with keys order_id and sum (representing the total)
+ * @return {undefined}
+ */
+function printShopperOrders(orders) {
   const idWidth = 8;
   const costWidth = 10;
   const line = `|-${'-'.repeat(idWidth)}-+-${'-'.repeat(costWidth)}-|`;
   console.log(line);
   console.log('| order id | total cost |');
   console.log(line);
-  // this is where i print the order ids and totals
+  orders.forEach(order =>
+    console.log(`| ${order.order_id}${' '.repeat(idWidth - String(order.order_id).length)} | ${order.sum}${' '.repeat(costWidth - String(order.sum).length)} |`))
   console.log(line);
 }
+
 /**
- * [printSection description]
- * @param  {array} items array of anonymous objects with keys name and section
- * @return {undefined}  (prints results to console)
+ * Formats the section items and prints them to the console.
+ * @param  {array} items array of objects with keys name and section
+ * @return {undefined}
  */
 function printSection(items) {
   const nameWidth = 22;
@@ -55,6 +62,11 @@ function printSection(items) {
   console.log(line);
 }
 
+/**
+ * Formats the real shoppers list and prints it to console.
+ * @param  {array} shopperList objects each with key name and count (representing how many orders that shopper has)
+ * @return {undefined}
+ */
 function printRealShoppers(shopperList) {
   const nameWidth = 13;
   const orderWidth = 17;
