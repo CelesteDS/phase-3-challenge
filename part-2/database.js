@@ -1,6 +1,6 @@
 const pg = require('pg-promise')(); // default options = ();
 
-let connectionString = `postgres://${process.env.USER}:@localhost:5432/photo_votes`;
+let connectionString = `postgres://${process.env.USER}:@localhost:5432/grocery_store`;
 connectionString += process.env.NODE_ENV === 'test' ? '_test' : '';
 const db = pg(connectionString);
 

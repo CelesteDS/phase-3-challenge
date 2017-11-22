@@ -9,6 +9,7 @@ console.log(command);
 
 switch (command) {
   case 'product-list':
+    productList(inputOption).then(list=>printSection(list));
     break;
   case 'shopper-orders':
     shopperId = Number(inputOption);
@@ -37,16 +38,22 @@ function printShopperOrders () {
   // this is where i print the order ids and totals
   console.log(line);
 }
-
-function printSection () {
-  const nameWidth = 23;
-  const sectionWidth = 15;
-  const line = `|${'-'.repeat(nameWidth)}+${'-'.repeat(sectionWidth)}`
+/**
+ * [printSection description]
+ * @param  {array} items array of anonymous objects with keys name and section
+ * @return {undefined}  (prints results to console)
+ */
+function printSection(items) {
+  const nameWidth = 22;
+  const sectionWidth = 14;
+  const line = `|${'-'.repeat(nameWidth)}-+${'-'.repeat(sectionWidth)}-|`
   console.log(line);
-  console.log(`| Product Name${' '.repeat(nameWidth - 13)}| Section${' '.repeat(sectionWith - 8)}`);
+  console.log(`| Product Name${' '.repeat(nameWidth - 13)} | Section${' '.repeat(sectionWidth - 7)}|`);
   console.log(line);
-  // this is where i print the list of product names & sections
-
+  items.forEach(item =>
+    console.log(`| ${item.name}${' '.repeat(nameWidth - item.name.length)}| ${item.section}${' '.repeat(sectionWidth - item.section.length)}|`)
+  );
+  console.log(line);
 }
 
 function printRealShoppers () {
