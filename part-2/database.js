@@ -4,6 +4,11 @@ let connectionString = `postgres://${process.env.USER}:@localhost:5432/grocery_s
 connectionString += process.env.NODE_ENV === 'test' ? '_test' : '';
 const db = pg(connectionString);
 
+/**
+ * Gets a list of all the products in the db in given section.
+ * @param  {string} section the section to list the items from
+ * @return {promise} - resolves to array of objects with keys name and section
+ */
 function productList(section) {
   return db.any(`SELECT name, section
     FROM products
@@ -35,6 +40,10 @@ function shopperOrders(shopperId) {
 
 }
 
+/**
+ * Gets a list of the shoppers that have at least one order and their number of orders.
+ * @return {promise} - resolves to array of objects with keys name and count
+ */
 function realShoppers() {
   return db.any(`
     SELECT shoppers.name, COUNT(shopper_id)

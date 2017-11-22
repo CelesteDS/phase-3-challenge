@@ -4,14 +4,17 @@
   "description": "part 2 of phase 3 challenge",
   "main": "store.js",
   "scripts": {
-    "test": "export NODE_ENV='test' && mocha",
+    "test": "export NODE_ENV='test' && mocha test/database_test.js",
     "test_db:create": "dropdb grocery_store_test; createdb grocery_store_test; psql grocery_store_test < schema.sql",
+    "test_db:seed": "psql grocery_store_test < test/test-seed-data.sql",
     "db:create": "dropdb grocery_store; createdb grocery_store; psql grocery_store < schema.sql",
     "db:seed": "psql grocery_store < load-data.sql"
   },
   "author": "Celeste De Santiago",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
     "pg-promise": "^7.3.2"
   },
   "devDependencies": {

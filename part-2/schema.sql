@@ -10,7 +10,6 @@ CREATE TABLE orders (
   shopper_id INTEGER REFERENCES shoppers(id)
 );
 
-
 CREATE TABLE products (
   id SERIAL PRIMARY KEY,
   name VARCHAR(80),
