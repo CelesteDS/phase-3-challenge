@@ -5,6 +5,9 @@ body {
   font-family: "Lucida Grande", "Helvetica", sans-serif;
 }
 
+dialog::backdrop {
+  background: rgba(255,0,0,.25);
+}
 /* LAYOUT UTILS */
 .flex {
   display: -webkit-flex;

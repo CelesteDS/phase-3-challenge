@@ -1,26 +1,34 @@
 function addToCart() {
   const item = this.previousElementSibling.previousElementSibling.innerHTML;
   const price = Number(this.previousElementSibling.innerHTML.slice(1));
-  const cartTotal = document.getElementById('cart-item-count')
-  cartTotal.innerHTML = `(${Number(cartTotal.innerHTML.match(/\d+/)[0]) + 1})`
+  const cartTotal = document.getElementById('cart-item-count');
+  cartTotal.innerHTML = `(${Number(cartTotal.innerHTML.match(/\d+/)[0]) + 1})`;
+  const newCartItem = document.createElement('li');
+  document.getElementById('cart-items').append(newCartItem);
+  newCartItem.outerHTML = `<li class="cart-item flex flex-row-between"><span class="cart-item-name">${item}</span><span class="cart-item-price">$${price}</span></li>`;
 }
-
 function clearCart() {
   document.getElementById('cart-item-count').innerHTML = '(0)';
+  document.getElementById('cart-items').outerHTML = '<ul class="item-section" id="cart-items"></ul>';
 }
 
 function cartModal() {
-  // figure out how to make a modal
+  document.getElementById('cart-modal').setAttribute('open', '');
+}
+
+function exitCart() {
+  document.getElementById('cart-modal').removeAttribute('open');
 }
 const buttons = document.querySelectorAll('button');
 
 buttons.forEach(function(button) {
-  button.addEventListener('click', addToCart);
+  if (button.id === 'cart-button') {
+    button.addEventListener('click', cartModal);
+  } else if (button.id === 'clear-cart') {
+      button.addEventListener('click', clearCart);
+  } else if (button.id === 'exit-cart') {
+      button.addEventListener('click', exitCart);
+  } else {
+    button.addEventListener('click', addToCart);
+  }
 });
-
-// document.getElementById('cart-button').addEventListener('click', cartModal, opts)
-// add another listener for the button w id cart-button
-// that prevents defaul behavior and just runs funct to open
-// modal
-//
-// and another one for the clear button in the cart modal
